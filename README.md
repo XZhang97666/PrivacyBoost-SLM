@@ -17,12 +17,11 @@ This includes:
 #### Biomedical domain: [MedQA-USMLE](https://github.com/jind11/MedQA), [HEADQA](https://github.com/aghie/head-qa), [MedMCQA](https://medmcqa.github.io/), and [MMLU-professional medicine](https://github.com/hendrycks/test).
 #### General domain: [CommonSenseQA](https://www.tau-nlp.sites.tau.ac.il/commonsenseqa) and [OpenbookQA](https://allenai.org/data/open-book-qa).
 
-If you would like to generate context by yourself, you can uilize `api_call.sh` with setting `dataset_name` to be the dataset, e.g `{medqa headqa medmcqa}`, `split` to be `{train validation|dev test}` and `start_idx` and `end_idx` to be start and end index of dataset to iterrate and call OpenAI API. 
-
-
-download the raw datasets from the original sources by following instructions in scripts/download_raw_data.sh
-Then run the preprocessing scripts scripts/preprocess_{mrqa,blurb,medqa,mmlu}.py.
-api_call.sh
+To generate context on your own, you can use the `api_call.sh`. To do this, follow the steps below:
+- Set `dataset_name` to the desired dataset, for example: `{medqa headqa medmcqa}`.
+- Set `split` to the desired dataset split, `{train validation|dev test}`.
+- Specify the `start_idx` and `end_idx` to define the starting and ending index of the dataset you want to iterate through.
+- Call the OpenAI API with the configured settings.
 
 ## 2. Experiment results
 
@@ -37,7 +36,7 @@ sh run_training_eval_bert.sh
 To evaluate the performance using BioLinkBert-Large, replace the `model_name_or_path` argument with "michiyasunaga/BioLinkBERT-large" in the previous commands.
 
 #### BioMedLM
-To directly evaluate the performance of the FTC using BioMedLM as the backbone on various datasets, we upload the BioMedLM checkpoints [here]. Simply download this zip file and unzip its contents. Then follow the instructions below to adpot the fine-tuned model.
+To directly evaluate the performance of the FTC using BioMedLM as the backbone on various datasets, we upload the BioMedLM checkpoints [here](https://drive.google.com/file/d/1gB-V6D_3xaRaYDkUrdUhJE8j6RQjNHou/view?usp=sharing). Simply download this zip file and unzip its contents. Then follow the instructions below to adpot the fine-tuned model.
 ```
 sh run_training_eval_gpt.sh 
 ```
