@@ -142,21 +142,21 @@ async def main():
 
         if "context" in args.mode:
             intro_prompt="Generate context with medical knowledge based on the subject by utilizing the provided keywords and answer choices. Identify the specific medical relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
-            with open("./data/headqa/"+args.split+"_concepts.json") as f:
+            with open("./data/headqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
             # with each answer
-            with open("./data/headqa/key2context_prompt.json") as f:
+            with open("./data/headqa/apicall/key2context_prompt.json") as f:
                 init_prompts = json.load(f)
            
-            with open("./data/headqa/prompts.json") as f:
+            with open("./data/headqa/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
             init_prompt = init_prompt_dict['Context']
         elif 'cot' in args.mode:
             intro_prompt="'The following are multiple choice questions (with answers) about medical knowledge.\n\n"
             # with each answer
-            with open("./data/headqa/cot_prompt.json") as f:
+            with open("./data/headqa/apicall/cot_prompt.json") as f:
                 init_prompts = json.load(f)
-            with open("./data/headqa/cots.json") as f:
+            with open("./data/headqa/apicall/cots.json") as f:
                 init_prompt_dict = json.load(f)
             init_prompt = init_prompt_dict['Explanation']
 
@@ -260,7 +260,7 @@ async def main():
                 for choice,text in dataset[i]['options'].items():
                     answer_choices += "("+choice.lower()+") "+ text +" "
                 cur_prompt = keywords+"\n"+ answer_choices+"\n"+ gname+":"
-
+            prompt = intro_prompt+init_prompt + cur_prompt
             if 'chatgpt' in args.mode:
                 try:
                     response = openai.ChatCompletion.create(
