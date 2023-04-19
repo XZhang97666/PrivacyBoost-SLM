@@ -11,10 +11,18 @@ pip install -r requirements.txt
 ```
 
 ### Dataset
+
 You can download the generated context and processed dataset (if not directly available from Hugging Face) on which we evaluated our method from [here]. Simply download this zip file and extract its contents.
 This includes:
 #### Biomedical domain: [MedQA-USMLE](https://github.com/jind11/MedQA), [HEADQA](https://github.com/aghie/head-qa), [MedMCQA](https://medmcqa.github.io/), and [MMLU-professional medicine](https://github.com/hendrycks/test).
 #### General domain: [CommonSenseQA](https://www.tau-nlp.sites.tau.ac.il/commonsenseqa) and [OpenbookQA](https://allenai.org/data/open-book-qa).
+
+If you would like to generate context by yourself, you can uilize `api_call.sh` with setting `dataset_name` to be the dataset, e.g `{medqa headqa medmcqa}`, `split` to be `{train validation|dev test}` and `start_idx` and `end_idx` to be start and end index of dataset to iterrate and call OpenAI API. 
+
+
+download the raw datasets from the original sources by following instructions in scripts/download_raw_data.sh
+Then run the preprocessing scripts scripts/preprocess_{mrqa,blurb,medqa,mmlu}.py.
+api_call.sh
 
 ## 2. Experiment results
 
@@ -23,7 +31,7 @@ This includes:
 #### BioLinkBert
 To evaluate the performance of the Fine-Tuning with Context (FTC) using BioLinkBert-Base as the backbone on MedQA, HEADQA and MedMCQA, run
 ```
-sh ./scripts/run_training_eval_bert.sh 
+sh run_training_eval_bert.sh 
 ```
 
 To evaluate the performance using BioLinkBert-Large, replace the `model_name_or_path` argument with "michiyasunaga/BioLinkBERT-large" in the previous commands.
@@ -31,14 +39,14 @@ To evaluate the performance using BioLinkBert-Large, replace the `model_name_or_
 #### BioMedLM
 To directly evaluate the performance of the FTC using BioMedLM as the backbone on various datasets, we upload the BioMedLM checkpoints [here]. Simply download this zip file and unzip its contents. Then follow the instructions below to adpot the fine-tuned model.
 ```
-sh ./scripts/run_training_eval_gpt.sh 
+sh run_training_eval_gpt.sh 
 ```
 
 #### T5
 To further evaluate the performance on general domain e.g. CommonsenseQA and OpenbookQA dataset, run
 
 ```
-sh ./scripts/run_training_eval_t5.sh 
+sh run_training_eval_t5.sh 
 ```
 
 
@@ -46,7 +54,7 @@ sh ./scripts/run_training_eval_t5.sh
 
 Change the `shot= {100 200 500}` to run experiments in few-shot setting. For example, to evluate few-shot performance on MedQA dataset with BioLinkBert-Base as backbone, run
 ```
-sh ./scripts/run_training_eval_bert_fewshot.sh 
+sh run_training_eval_bert_fewshot.sh 
 ```
 
 ###  Out-of-Domain (OOD) Performance
