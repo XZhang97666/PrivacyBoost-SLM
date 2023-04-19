@@ -1,9 +1,5 @@
 import types
 import torch
-# from transformers import T5PreTrainedModel,T5Config
-# from transformers.models.t5.modeling_t5 import T5Stack
-# from transformers.modeling_outputs import  Seq2SeqLMOutput,BaseModelOutput
-# from transformers.utils.model_parallel_utils import assert_device_map, get_device_map
 from transformers import T5ForConditionalGeneration #T5ForConditionalGeneration
 import torch.nn.functional as F
 from torch import nn
@@ -13,15 +9,6 @@ from typing import *
 import copy
 import warnings
 
-# from transformers.utils import (
-#     DUMMY_INPUTS,
-#     DUMMY_MASK,
-#     add_start_docstrings,
-#     add_start_docstrings_to_model_forward,
-#     is_torch_fx_proxy,
-#     logging,
-#     replace_return_docstrings,
-# )
 
 
 

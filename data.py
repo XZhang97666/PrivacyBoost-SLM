@@ -65,30 +65,30 @@ class MedQAForBert(DatasetForBert):
     def load_validation_data(self):
 
         if "qac_25" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-25-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-validation-0-1272-25-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif "qac_50" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-50-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-validation-0-1272-50-0.0.json") as f:
                 keycontext_dataset = json.load(f)        
         elif "qac_75" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-75-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-validation-0-1272-75-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif 'qac_random_word'in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-random-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-validation-0-1272-random-0.0.json") as f:
                 keycontext_dataset = json.load(f) 
         elif 'qac_random_span' in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-randomspan-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-validation-0-1272-randomspan-0.0.json") as f:
                 keycontext_dataset = json.load(f) 
         elif "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg_no_pos-validation-0-1272-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg_no_pos-validation-0-1272-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-validation-0-1272-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg-validation-0-1272-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/medqa/context_v6/org_contexteA-validation-0-1272-0.0.json") as f:
+                with open("./data/MedQA/context/org_contexteA-validation-0-1272-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             
 
@@ -104,10 +104,7 @@ class MedQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -148,31 +145,31 @@ class MedQAForBert(DatasetForBert):
     def load_test_data(self):
 
         if "qac_25" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-25-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-test-0-1273-25-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif "qac_50" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-50-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-test-0-1273-50-0.0.json") as f:
                 keycontext_dataset = json.load(f)
 
         elif "qac_75" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-75-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-test-0-1273-75-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif 'qac_random_word' in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-random-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-test-0-1273-random-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif 'qac_random_span' in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-randomspan-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-test-0-1273-randomspan-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg_no_pos-test-0-1273-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg_no_pos-test-0-1273-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-test-0-1273-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg-test-0-1273-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/medqa/context_v6/org_contexteA-test-0-1273-0.0.json") as f:
+                with open("./data/MedQA/context/org_contexteA-test-0-1273-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         dataset = load_dataset('./data/MedQA/BertMC/',split="test")
@@ -187,10 +184,7 @@ class MedQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -227,31 +221,31 @@ class MedQAForBert(DatasetForBert):
     def load_training_data(self):
 
         if "qac_25" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-10178-25-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-train-0-10178-25-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif "qac_50" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-10178-50-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-train-0-10178-50-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif "qac_75" in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-10178-75-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-train-0-10178-75-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif 'qac_random_word'in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-1000-random-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-train-0-1000-random-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         elif 'qac_random_span' in self.split:
-            with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-1000-randomspan-0.0.json") as f:
+            with open("./data/MedQA/context/org_contexteA-train-0-1000-randomspan-0.0.json") as f:
                 keycontext_dataset = json.load(f) 
 
         elif "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg_no_pos-train-0-10178-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg_no_pos-train-0-10178-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-train-0-10178-0.0.json") as f:
+                with open("./data/MedQA/context/contexteA_no_neg-train-0-10178-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/medqa/context_v6/org_contexteA-train-0-10178-0.0.json") as f:
+                with open("./data/MedQA/context/org_contexteA-train-0-10178-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
 
@@ -262,8 +256,6 @@ class MedQAForBert(DatasetForBert):
         self.ending_names = [f"ending{i}" for i in range(self._num_choices )]
 
         self.context_names = [f"sent2_{i}" for i in range(self._num_choices )]
-        if 'wA' in self.split:
-            self.context_names = ["sent2"]*self._num_choices 
             
 
 
@@ -277,10 +269,7 @@ class MedQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     try:
                         data_i['overall']=keycontext_dataset[idx]['overall']
                     except:
@@ -363,14 +352,14 @@ class HeadQAForBert(DatasetForBert):
         if "eA" in self.split:
             cname='validation-0-1366'
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/headqa/context_v1/org_contexteA-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/org_contexteA-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
 
@@ -385,10 +374,7 @@ class HeadQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -424,14 +410,14 @@ class HeadQAForBert(DatasetForBert):
         if "eA" in self.split:
             cname='test-0-2742'
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/headqa/context_v1/org_contexteA-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/org_contexteA-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
 
@@ -446,10 +432,7 @@ class HeadQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -487,14 +470,14 @@ class HeadQAForBert(DatasetForBert):
         if "eA" in self.split:
             cname='train-0-2657'
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/headqa/context_v1/contexteA_no_neg-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/contexteA_no_neg-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/headqa/context_v1/org_contexteA-"+cname+"-0.0.json") as f:
+                with open("./data/headqa/context/org_contexteA-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
 
@@ -516,10 +499,7 @@ class HeadQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -595,14 +575,14 @@ class MedMACQAForBert(DatasetForBert):
         if "eA" in self.split:
             cname='validation-0-4183'
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/medmcqa/context_v1/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
+                with open("./data/medmc/context/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/medmcqa/context_v1/contexteA_no_neg-"+cname+"-0.0.json") as f:
+                with open("./data/medmc/context/contexteA_no_neg-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/medmcqa/context_v1/org_contexteA-"+cname+"-0.0.json") as f:
+                with open("./data/medmc/context/org_contexteA-"+cname+"-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         dataset = load_dataset("medmcqa",split="validation")
@@ -620,10 +600,7 @@ class MedMACQAForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -661,14 +638,14 @@ class MedMACQAForBert(DatasetForBert):
 
         cname='random-train-0-10000'
         if "woneg" in self.split and 'wopos' in self.split:
-            with open("./data/GPT3/medmcqa/context_v1/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
+            with open("./data/medmc/context/contexteA_no_neg_no_pos-"+cname+"-0.0.json") as f:
                 keycontext_dataset = json.load(f)
 
         elif "woneg" in self.split:
-            with open("./data/GPT3/medmcqa/context_v1/contexteA_no_neg-"+cname+"-0.0.json") as f:
+            with open("./data/medmc/context/contexteA_no_neg-"+cname+"-0.0.json") as f:
                 keycontext_dataset = json.load(f)
         else:
-            with open("./data/GPT3/medmcqa/context_v1/org_contexteA-"+cname+"-0.0.json") as f:
+            with open("./data/medmc/context/org_contexteA-"+cname+"-0.0.json") as f:
                 keycontext_dataset = json.load(f)
 
 
@@ -682,8 +659,7 @@ class MedMACQAForBert(DatasetForBert):
         self.ending_names = [elm for elm in dataset.features.keys() if elm.startswith('op')]
         self._num_choices = len(self.ending_names)
         self.context_names = [f"sent2_{i}" for i in range(self._num_choices )]
-        if 'wA' in self.split:
-            self.context_names = ["sent2"]*self._num_choices 
+
         data=[]
         if 'qac' in self.split:
             indices=idx_list[:len(keycontext_dataset)]
@@ -695,10 +671,7 @@ class MedMACQAForBert(DatasetForBert):
             idx=indices[i]
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[i]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     try:
                         data_i['overall']=keycontext_dataset[i]['overall']
                     except:
@@ -772,7 +745,7 @@ class MMLUForBert(DatasetForBert):
     def load_test_data(self):
 
         if "eA" in self.split:
-            with open("./data/GPT3/mmlu/org_contexteA-test-0-272-0.0.json") as f:
+            with open("./data/mmlu/context/org_contexteA-test-0-272-0.0.json") as f:
                 keycontext_dataset = json.load(f)
 
         dataset = load_dataset('./data/mmlu/professional_medicine/',split="test")
@@ -787,10 +760,7 @@ class MMLUForBert(DatasetForBert):
         for idx in indices:
             data_i=dataset[idx]
             if "qac" in self.split:
-                if 'wA' in self.split:
-                    kc=keycontext_dataset[idx]['context']
-                    data_i['sent2']=kc
-                elif 'eA' in self.split:
+                if 'eA' in self.split:
                     data_i['overall']=keycontext_dataset[idx]['overall']
                     if "all" in self.split:
                         k=0
@@ -837,222 +807,6 @@ class MMLUForBert(DatasetForBert):
 
 
 
-class CSQAForT5(DatasetForT5):
-
-    def __init__(self, max_src_len , max_tgt_len , task_name, tokenizer, split, shot, mask_incorrect_reasoning_path):
-        super().__init__(max_src_len , max_tgt_len , task_name, tokenizer, split)
-        self.shot = shot
-        self.mask_incorrect_reasoning_path = mask_incorrect_reasoning_path
-        if("train" in self.split):
-            self.data = self.load_training_data()
-        elif("debug" in self.split):
-            self.data = self.debug_load_validation_data()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-
-    def __getitem__(self, idx):
-
-        if("multitask" in self.split):
-
-            if(self.mask_incorrect_reasoning_path):
-                tgt_ids2 = torch.tensor(self.tgt_text2s["input_ids"][idx],dtype=torch.long)*int(self.data[idx]["correct"])
-                # import pdb; pdb.set_trace()
-            else:
-                tgt_ids2 = torch.tensor(targets2["input_ids"][idx],dtype=torch.long)
-            return {"src_ids1": torch.tensor(self.src_text1s["input_ids"][idx],dtype=torch.long),
-                    "src_ids2": torch.tensor(self.src_text2s["input_ids"][idx],dtype=torch.long),
-                    "src_mask1":torch.tensor(self.src_text1s["attention_mask"][idx],dtype=torch.long),
-                    "src_mask2":torch.tensor(self.src_text2s["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids1": torch.tensor(self.tgt_text1s["input_ids"][idx],dtype=torch.long),
-                    "tgt_ids2": tgt_ids2}
-        else:
-            return {"src_ids": torch.tensor(self.src_texts["input_ids"][idx],dtype=torch.long),
-                    "src_mask":torch.tensor(self.src_texts["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids": torch.tensor(self.tgt_texts["input_ids"][idx],dtype=torch.long)}
-
-    
-   
-
-    def load_validation_data(self):
-        data = []
-        dataset = load_dataset('commonsense_qa',split="validation")
-
-        if 'qae' in self.split:
-            with open("./data/GPT3/csqa/explain-validation-0-1221-0.0.json") as f:
-                keycontext_dataset  = json.load(f)
-        else:
-            with open("./data/GPT3/csqa/contextwA-validation-0-1221-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-        for i in range(len(dataset)):
-            data_i = {}
-            answer_choices = "Answer Choices:\n"
-            for j in range(len(dataset[i]['choices']["label"])):
-                answer_choices += "("+dataset[i]['choices']["label"][j].lower()+") "+dataset[i]['choices']["text"][j]+"\n"
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-
-            if 'qakc' in self.split:
-                src_text+=answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-            elif "qkca" in  self.split:
-                src_text+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-            elif "qak" in  self.split:
-                src_text+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nA:"
-            elif ("qac" in  self.split) :
-                src_text+= answer_choices+"Context: "+keycontext_dataset[i]['context']+"\nA:"
-            elif 'qae' in self.split:
-                src_text+= answer_choices+"Context: "+keycontext_dataset[i]['explanation']+"\nA:"
-            else:
-                src_text +=answer_choices+"A:"
-
-            data_i["src_text"]= src_text
-            data_i["tgt_text"] = "("+dataset[i]['answerKey'].lower()+")"
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_training_data(self):
-        data = []
-        indices = []
-        with open("./data/GPT3/csqa/cot-train-0-9741-0.0.json") as f:
-            cot_dataset = json.load(f)
-        with open("./data/GPT3/csqa/explain-train-0-9741-0.0.json") as f:
-            explain_dataset = json.load(f)
-        with open("./data/GPT3/csqa/cotexplain-train-0-9741-0.0.json") as f:
-            cotexplain_dataset = json.load(f)
-        
-        if 'withA' in self.split:
-            with open("./data/GPT3/csqa/contextwA-train-0-9741-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-        elif 'woA' in  self.split:
-            with open("./data/GPT3/csqa/keywords-context-train-0-400-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-        elif 'eachA' in  self.split:
-            with open("./data/GPT3/csqa/keywords-eachA-train-0-400-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-
-        for idx in range(len(cot_dataset)): #len(cot_dataset)
-            if("correct" in self.split):
-                if(cot_dataset[idx]["correct"]):
-                    indices.append(idx)
-            elif("all" in self.split):
-                indices.append(idx)
-
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-        
-        dataset = load_dataset('commonsense_qa',split="train")
-        for i in indices:
-            data_i = {}
-            answer_choices = "Answer Choices:\n"
-            for j in range(len(dataset[i]['choices']["label"])):
-                answer_choices += "("+dataset[i]['choices']["label"][j].lower()+") "+dataset[i]['choices']["text"][j]+"\n"
-            question = "Q: "+dataset[i]['question'] +"\n"
-            if("multitask" in self.split):
-                src_text1 = "qta " + question
-                src_text2 = "qtr " + question
-                tgt_text1 = "("+dataset[i]['answerKey'].lower()+")"
-                # import pdb; pdb.set_trace()
-                if("EXPLANATION" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["explanation"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                elif("COT" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["cot"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                elif("PE" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["pe"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["pe"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["pe"]
-                        data_i["correct"] = True
-
-                if 'qakc' in self.split:
-                    src_text1+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-                    src_text2+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-                elif "qkca" in  self.split:
-                    src_text1+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-                    src_text2+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-                
-                elif "qak" in  self.split:
-                    src_text1+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nA:"
-                    src_text2+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nA:"
-                
-                elif "qac" in  self.split:
-                    src_text1+= answer_choices+"Context: "+keycontext_dataset[i]['context']+"\nA:"
-                    src_text2+= answer_choices+"Context: "+keycontext_dataset[i]['context']+"\nA:"
-                else:
-                    src_text1 +=answer_choices+"A:"
-                    src_text2 +=answer_choices+"A:"
-                data_i["src_text1"] = src_text1
-                data_i["src_text2"] = src_text2
-                data_i["tgt_text1"] = tgt_text1
-                data_i["tgt_text2"] = tgt_text2
-                data.append(data_i)
-            # elif("pe" in self.split):
-            #     import pdb; pdb.set_trace()
-            # elif("ep" in self.split):
-            #     import pdb; pdb.set_trace()
-            else:
-                src_text = "qta " + question
-                tgt_text = "("+dataset[i]['answerKey'].lower()+")"
-                
-                if 'qakc' in self.split:
-                    src_text+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-                elif "qkca" in  self.split:
-                    src_text+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-                elif "qak" in self.split:
-                    src_text+= answer_choices+"Keyword: "+ keycontext_dataset[i]['keywords']+"\nA:"  
-                elif "qac" in  self.split:
-                    src_text+= answer_choices+"Context: "+keycontext_dataset[i]['context']+"\nA:"
-                elif 'qae' in self.split:
-                    src_text+= answer_choices+"Context: "+explain_dataset[i]['explanation']+"\nA:"
-                else:
-                    src_text +=answer_choices+"A:"
-
-                data_i["src_text"] = src_text
-                data_i["tgt_text"] = tgt_text
-                data.append(data_i)
-
-        if("multitask" in self.split):
-            src_text1s = [example["src_text1"] for example in data]
-            src_text2s = [example["src_text2"] for example in data]
-            tgt_text1s = [example["tgt_text1"] for example in data]
-            tgt_text2s = [example["tgt_text2"] for example in data]
-            self.src_text1s = self.tokenizer(src_text1s, max_length=self.max_src_len)
-            self.src_text2s = self.tokenizer(src_text2s, max_length=self.max_src_len)
-            self.tgt_text1s = self.tokenizer(tgt_text1s, max_length=self.max_tgt_len)
-            self.tgt_text2s = self.tokenizer(tgt_text2s, max_length=self.max_tgt_len)
-        else:
-            src_texts = [example["src_text"] for example in data]
-            tgt_texts = [example["tgt_text"] for example in data]
-            self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-            self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
 
 class CSQAForFiD(Dataset):
 
@@ -1086,17 +840,14 @@ class CSQAForFiD(Dataset):
 
         if "eA" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/csqa/context_v4/contexteA_no_neg_no_pos-validation-0-1221-0.0.json") as f:
+                with open("./data/csqa/context/contexteA_no_neg_no_pos-validation-0-1221-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/csqa/context_v4/contexteA_no_neg-validation-0-1221-0.0.json") as f:
+                with open("./data/csqa/context/contexteA_no_neg-validation-0-1221-0.0.json") as f:
                     keycontext_dataset = json.load(f)
-            # elif "wopos" in self.split:
-            #     with open("./data/GPT3/medqa/context_v6/contexteA_no_pos-validation-0-1272-0.0.json") as f:
-            #         keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/csqa/context_v4/org_contexteA-validation-0-1221-0.0.json") as f:
+                with open("./data/csqa/context/org_contexteA-validation-0-1221-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         
@@ -1140,17 +891,14 @@ class CSQAForFiD(Dataset):
 
         if "eA" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/csqa/context_v4/contexteA_no_neg_no_pos-train-0-9741-0.0.json") as f:
+                with open("./data/csqa/context/contexteA_no_neg_no_pos-train-0-9741-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/csqa/context_v4/contexteA_no_neg-train-0-9741-0.0.json") as f:
+                with open("./data/csqa/context/contexteA_no_neg-train-0-9741-0.0.json") as f:
                     keycontext_dataset = json.load(f)
-            # elif "wopos" in self.split:
-            #     with open("./data/GPT3/medqa/context_v6/contexteA_no_pos-validation-0-1272-0.0.json") as f:
-            #         keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/csqa/context_v4/org_contexteA-train-0-9741-0.0.json") as f:
+                with open("./data/csqa/context/org_contexteA-train-0-9741-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         
@@ -1222,7 +970,7 @@ class OBQAForFiD(Dataset):
 
 
 
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/dev_complete.jsonl") as f:
+        with open("./data/obqa/OpenBookQA-V1-Sep2018/Data/Additional/dev_complete.jsonl") as f:
             dataset = []
             for line in f.readlines():
                 dataset.append(json.loads(line))
@@ -1230,14 +978,14 @@ class OBQAForFiD(Dataset):
         
         if "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg_no_pos-validation-0-500-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg_no_pos-validation-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg-validation-0-500-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg-validation-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/obqa/context_v1/org_contexteA-validation-0-500-0.0.json") as f:
+                with open("./data/obqa/context/org_contexteA-validation-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         
@@ -1279,7 +1027,7 @@ class OBQAForFiD(Dataset):
 
     def load_training_data(self):
         
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/train_complete.jsonl") as f:
+        with open("./data/obqa/OpenBookQA-V1-Sep2018/Data/Additional/train_complete.jsonl") as f:
             dataset = []
             for line in f.readlines():
                 dataset.append(json.loads(line))
@@ -1287,14 +1035,14 @@ class OBQAForFiD(Dataset):
 
         if "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg_no_pos-train-0-4957-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg_no_pos-train-0-4957-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg-train-0-4957-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg-train-0-4957-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/obqa/context_v1/org_contexteA-train-0-4957-0.0.json") as f:
+                with open("./data/obqa/context/org_contexteA-train-0-4957-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         
@@ -1336,7 +1084,7 @@ class OBQAForFiD(Dataset):
 
     def load_test_data(self):
         
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/test_complete.jsonl") as f:
+        with open("./data/obqa/OpenBookQA-V1-Sep2018/Data/Additional/test_complete.jsonl") as f:
             dataset = []
             for line in f.readlines():
                 dataset.append(json.loads(line))
@@ -1344,14 +1092,14 @@ class OBQAForFiD(Dataset):
 
         if "qac" in self.split:
             if "woneg" in self.split and 'wopos' in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg_no_pos-test-0-500-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg_no_pos-test-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
             elif "woneg" in self.split:
-                with open("./data/GPT3/obqa/context_v1/contexteA_no_neg-test-0-500-0.0.json") as f:
+                with open("./data/obqa/context/contexteA_no_neg-test-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
             else:
-                with open("./data/GPT3/obqa/context_v1/org_contexteA-test-0-500-0.0.json") as f:
+                with open("./data/obqa/context/org_contexteA-test-0-500-0.0.json") as f:
                     keycontext_dataset = json.load(f)
 
         
@@ -1390,829 +1138,6 @@ class OBQAForFiD(Dataset):
             data.append(data_i)
 
         return data
-class MMLUForFiD(Dataset):
-
-    def __init__(self, task_name,split, shot):
-        super().__init__()
-        self.shot = shot
-        self.split=split
-        self.task_name=task_name
-        if("train" in self.split):
-            self.data = self.load_training_data()
-            # import pdb;pdb.set_trace()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-        
-        elif("test" in self.split):
-            self.data = self.load_test_data()
-        
-
-    def __getitem__(self, idx):
-        example = self.data[idx]
-        return {
-            'src_text' : example['src_text'],
-            'contexts' : example['contexts'],
-            'tgt_text' : example['tgt_text']
-        }
-
-    def __len__(self):
-        return len(self.data)
-
-
-    def load_validation_data(self):
-        
-        data = []
-        indices = []
-               
-        with open("./data/GPT3/mmlu/contexteA_no_neg-validation-0-1272-0.0.json") as f:
-            keycontext_dataset = json.load(f)
-        dataset = load_dataset('./data/mmlu/professional_medicine/',split="validation")
-        
-        num_choices = len([elm for elm in dataset.features.keys() if elm.startswith('ending')])
-        ending_names = [f"ending{i}" for i in range(num_choices )]
-        endings_dict = {ending_names[i]: chr(ord('a') + i) for i in range(num_choices)}
-        
-
-        indices=list(range(len(dataset)))
-
-
-        for i in indices:
-            choices_text=[]
-            contexts=[]
-            data_i = {}
-            answer_choices = "Answer Choices: "
-            for ending in ending_names:
-                answer_choices += "("+endings_dict[ending]+") "+ dataset[i][ending] +" "
-                choices_text.append(dataset[i][ending])
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            src_text = "qta " + question + answer_choices
-
-            choice=endings_dict[ending_names[dataset[i]['label']]]
-            tgt_text = "("+choice.lower()+")"
-            
-
-            if 'qac' in self.split:
-                if 'eA' in self.split:
-                    for j,choice in enumerate(choices_text):
-                        try:
-                            contexts.append(keycontext_dataset[i]['overall']+" "+keycontext_dataset[i][choice]+'\nA:')
-                        except:
-                            contexts.append(keycontext_dataset[i]['overall']+'\nA:')
-
-            else:
-                src_text+='\nA:'
-
-            data_i['src_text']=src_text
-            data_i["tgt_text"]=tgt_text
-            data_i['contexts']=contexts
-
-            data.append(data_i)
-        
-        return data
-
-    def load_test_data(self):
-        
-        data = []
-        
-        if "eA" in self.split:
-            with open("./data/GPT3/mmlu/contexteA_no_neg-test-0-272-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-
-
-        dataset = load_dataset('./data/mmlu/professional_medicine/',split="test")
-        
-        num_choices = len([elm for elm in dataset.features.keys() if elm.startswith('ending')])
-        ending_names = [f"ending{i}" for i in range(num_choices )]
-        endings_dict = {ending_names[i]: chr(ord('a') + i) for i in range(num_choices)}
-        
-
-        indices=list(range(len(dataset)))
-
-
-        for i in indices:
-            choices_text=[]
-            contexts=[]
-            data_i = {}
-            answer_choices = "Answer Choices: "
-            for ending in ending_names:
-                answer_choices += "("+endings_dict[ending]+") "+ dataset[i][ending] +" "
-                choices_text.append(dataset[i][ending])
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            src_text = "qta " + question + answer_choices
-
-            choice=endings_dict[ending_names[dataset[i]['label']]]
-            tgt_text = "("+choice.lower()+")"
-            
-
-            if 'qac' in self.split:
-                if 'eA' in self.split:
-                    for j,choice in enumerate(choices_text):
-                        try:
-                            contexts.append(keycontext_dataset[i]['overall']+" "+keycontext_dataset[i][choice]+'\nA:')
-                        except:
-                            contexts.append(keycontext_dataset[i]['overall']+'\nA:')
-
-            else:
-                src_text+='\nA:'
-
-                
-
-
-            data_i['src_text']=src_text
-            data_i["tgt_text"]=tgt_text
-            data_i['contexts']=contexts
-
-        return data
-
-    def load_training_data(self):
-
-        return None
-
-
-
-class StrategyQAForT5(DatasetForT5):
-
-    def __init__(self, max_src_len , max_tgt_len , task_name, tokenizer, split, shot, mask_incorrect_reasoning_path):
-        super().__init__(max_src_len , max_tgt_len , task_name, tokenizer, split)
-        self.shot = shot
-        self.mask_incorrect_reasoning_path = mask_incorrect_reasoning_path
-        if("train" in self.split):
-            self.data = self.load_training_data()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-
-    def __getitem__(self, idx):
-
-        if("multitask" in self.split):
-
-            if(self.mask_incorrect_reasoning_path):
-                tgt_ids2 = torch.tensor(self.tgt_text2s["input_ids"][idx],dtype=torch.long)*int(self.data[idx]["correct"])
-            else:
-                tgt_ids2 = torch.tensor(targets2["input_ids"][idx],dtype=torch.long)
-            return {"src_ids1": torch.tensor(self.src_text1s["input_ids"][idx],dtype=torch.long),
-                    "src_ids2": torch.tensor(self.src_text2s["input_ids"][idx],dtype=torch.long),
-                    "src_mask1":torch.tensor(self.src_text1s["attention_mask"][idx],dtype=torch.long),
-                    "src_mask2":torch.tensor(self.src_text2s["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids1": torch.tensor(self.tgt_text1s["input_ids"][idx],dtype=torch.long),
-                    "tgt_ids2": tgt_ids2}
-        else:
-            return {"src_ids": torch.tensor(self.src_texts["input_ids"][idx],dtype=torch.long),
-                    "src_mask":torch.tensor(self.src_texts["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids": torch.tensor(self.tgt_texts["input_ids"][idx],dtype=torch.long)}
-
-
-    def load_validation_data(self):
-        data = []
-        with open("./data/strategyqa/dev.json") as f:
-            dataset = json.load(f)
-        for i in range(len(dataset)):
-            data_i = {}
-            question = "Q: "+dataset[i]['question'] +"\n" + "A:"
-            if(dataset[i]["answer"]):
-                answer = "yes"
-            else:
-                answer = "no"
-
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-            tgt_text = answer
-            data_i["src_text"] = src_text
-            data_i["tgt_text"] = tgt_text
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_training_data(self):
-
-        data = []
-        indices = []
-        with open("./data/GPT3/strategyqa/cot-train-0-2061-0.0.json") as f:
-            cot_dataset = json.load(f)
-        with open("./data/GPT3/strategyqa/explain-train-0-2061-0.0.json") as f:
-            explain_dataset = json.load(f)
-        with open("./data/GPT3/strategyqa/cotexplain-train-0-2061-0.0.json") as f:
-            cotexplain_dataset = json.load(f)
-
-        for idx in range(len(cot_dataset)):
-            if("correct" in self.split):
-                if(cot_dataset[idx]["correct"]):
-                    indices.append(idx)
-            elif("all" in self.split):
-                indices.append(idx)
-
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-
-        with open("./data/strategyqa/train.json") as f:
-            dataset = json.load(f)
-        for i in indices:
-            data_i = {}
-            question = "Q: "+dataset[i]['question'] +"\n" + "A:"
-            if(dataset[i]["answer"]):
-                answer = "yes"
-            else:
-                answer = "no"
-            if("multitask" in self.split):
-                src_text1 = "qta " + question
-                src_text2 = "qtr " + question
-                tgt_text1 = answer
-                # import pdb; pdb.set_trace()
-                if("EXPLANATION" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["explanation"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                elif("COT" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["cot"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                elif("PE" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["pe"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["pe"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["pe"]
-                        data_i["correct"] = True
-
-                data_i["src_text1"] = src_text1
-                data_i["src_text2"] = src_text2
-                data_i["tgt_text1"] = tgt_text1
-                data_i["tgt_text2"] = tgt_text2
-                data.append(data_i)
-            else:
-                src_text = "qta " + question
-                tgt_text = answer
-                data_i["src_text"] = src_text
-                data_i["tgt_text"] = tgt_text
-                data.append(data_i)
-
-        if("multitask" in self.split):
-            src_text1s = [example["src_text1"] for example in data]
-            src_text2s = [example["src_text2"] for example in data]
-            tgt_text1s = [example["tgt_text1"] for example in data]
-            tgt_text2s = [example["tgt_text2"] for example in data]
-            self.src_text1s = self.tokenizer(src_text1s, max_length=self.max_src_len)
-            self.src_text2s = self.tokenizer(src_text2s, max_length=self.max_src_len)
-            self.tgt_text1s = self.tokenizer(tgt_text1s, max_length=self.max_tgt_len)
-            self.tgt_text2s = self.tokenizer(tgt_text2s, max_length=self.max_tgt_len)
-        else:
-            src_texts = [example["src_text"] for example in data]
-            tgt_texts = [example["tgt_text"] for example in data]
-            self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-            self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-class CreakQAForT5(DatasetForT5):
-
-    def __init__(self, max_src_len , max_tgt_len , task_name, tokenizer, split, shot, mask_incorrect_reasoning_path):
-        super().__init__(max_src_len , max_tgt_len , task_name, tokenizer, split)
-        self.shot = shot
-        self.mask_incorrect_reasoning_path = mask_incorrect_reasoning_path
-        if("train" in self.split):
-            self.data = self.load_training_data()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-
-    def __getitem__(self, idx):
-
-        if("multitask" in self.split):
-
-            if(self.mask_incorrect_reasoning_path):
-                tgt_ids2 = torch.tensor(self.tgt_text2s["input_ids"][idx],dtype=torch.long)*int(self.data[idx]["correct"])
-            else:
-                tgt_ids2 = torch.tensor(targets2["input_ids"][idx],dtype=torch.long)
-            return {"src_ids1": torch.tensor(self.src_text1s["input_ids"][idx],dtype=torch.long),
-                    "src_ids2": torch.tensor(self.src_text2s["input_ids"][idx],dtype=torch.long),
-                    "src_mask1":torch.tensor(self.src_text1s["attention_mask"][idx],dtype=torch.long),
-                    "src_mask2":torch.tensor(self.src_text2s["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids1": torch.tensor(self.tgt_text1s["input_ids"][idx],dtype=torch.long),
-                    "tgt_ids2": tgt_ids2}
-        else:
-            return {"src_ids": torch.tensor(self.src_texts["input_ids"][idx],dtype=torch.long),
-                    "src_mask":torch.tensor(self.src_texts["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids": torch.tensor(self.tgt_texts["input_ids"][idx],dtype=torch.long)}
-
-
-    def load_validation_data(self):
-        data = []
-        with open("./data/creak/dev.json") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        for i in range(len(dataset)):
-            data_i = {}
-            question = "claim: " + dataset[i]['sentence']
-            if(dataset[i]["label"].lower()=="true"):
-                answer = "true"
-            elif(dataset[i]["label"].lower()=="false"):
-                answer = "false"
-            else:
-                import pdb;
-                pdb.set_trace()
-
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-
-            tgt_text = answer
-            data_i["src_text"] = src_text
-            data_i["tgt_text"] = tgt_text
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_training_data(self):
-
-        data = []
-        indices = []
-        with open("./data/GPT3/creak/cot-train-0-1000-0.0.json") as f:
-            cot_dataset = json.load(f)
-            assert len(cot_dataset) == 1000
-        with open("./data/GPT3/creak/cot-train-0-1000-0.0.json") as f:
-            explain_dataset = json.load(f)
-        with open("./data/GPT3/creak/cot-train-0-1000-0.0.json") as f:
-            cotexplain_dataset = json.load(f)
-
-        for idx in range(len(cot_dataset)):
-            if("correct" in self.split):
-                if(cot_dataset[idx]["correct"]):
-                    indices.append(idx)
-            elif("all" in self.split):
-                indices.append(idx)
-
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-
-        with open("./data/creak/train.json") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        for i in indices:
-            data_i = {}
-            question = "claim: " + dataset[i]['sentence']
-            if(dataset[i]["label"].lower()=="true"):
-                answer = "true"
-            elif(dataset[i]["label"].lower()=="false"):
-                answer = "false"
-            else:
-                import pdb;
-                pdb.set_trace()
-            if("multitask" in self.split):
-                src_text1 = "qta " + question
-                src_text2 = "qtr " + question
-                tgt_text1 = answer
-                # import pdb; pdb.set_trace()
-                if("EXPLANATION" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["explanation"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                elif("COT" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["cot"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                elif("PE" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["pe"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["pe"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["pe"]
-                        data_i["correct"] = True
-
-                data_i["src_text1"] = src_text1
-                data_i["src_text2"] = src_text2
-                data_i["tgt_text1"] = tgt_text1
-                data_i["tgt_text2"] = tgt_text2
-                data.append(data_i)
-            else:
-                src_text = "qta " + question
-                tgt_text = answer
-                data_i["src_text"] = src_text
-                data_i["tgt_text"] = tgt_text
-                data.append(data_i)
-
-        if("multitask" in self.split):
-            src_text1s = [example["src_text1"] for example in data]
-            src_text2s = [example["src_text2"] for example in data]
-            tgt_text1s = [example["tgt_text1"] for example in data]
-            tgt_text2s = [example["tgt_text2"] for example in data]
-            self.src_text1s = self.tokenizer(src_text1s, max_length=self.max_src_len)
-            self.src_text2s = self.tokenizer(src_text2s, max_length=self.max_src_len)
-            self.tgt_text1s = self.tokenizer(tgt_text1s, max_length=self.max_tgt_len)
-            self.tgt_text2s = self.tokenizer(tgt_text2s, max_length=self.max_tgt_len)
-        else:
-            src_texts = [example["src_text"] for example in data]
-            tgt_texts = [example["tgt_text"] for example in data]
-            self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-            self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-class OpenbookQAForT5(DatasetForT5):
-
-    def __init__(self, max_src_len , max_tgt_len , task_name, tokenizer, split, shot, mask_incorrect_reasoning_path):
-        super().__init__(max_src_len , max_tgt_len , task_name, tokenizer, split)
-        self.shot = shot
-        self.mask_incorrect_reasoning_path = mask_incorrect_reasoning_path
-        if("train" in self.split):
-            self.data = self.load_training_data()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-        elif("test" in self.split):
-            self.data = self.load_test_data()
-
-    def __getitem__(self, idx):
-
-        if("multitask" in self.split):
-
-            if(self.mask_incorrect_reasoning_path):
-                tgt_ids2 = torch.tensor(self.tgt_text2s["input_ids"][idx],dtype=torch.long)*int(self.data[idx]["correct"])
-            else:
-                tgt_ids2 = torch.tensor(targets2["input_ids"][idx],dtype=torch.long)
-            return {"src_ids1": torch.tensor(self.src_text1s["input_ids"][idx],dtype=torch.long),
-                    "src_ids2": torch.tensor(self.src_text2s["input_ids"][idx],dtype=torch.long),
-                    "src_mask1":torch.tensor(self.src_text1s["attention_mask"][idx],dtype=torch.long),
-                    "src_mask2":torch.tensor(self.src_text2s["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids1": torch.tensor(self.tgt_text1s["input_ids"][idx],dtype=torch.long),
-                    "tgt_ids2": tgt_ids2}
-        else:
-            return {"src_ids": torch.tensor(self.src_texts["input_ids"][idx],dtype=torch.long),
-                    "src_mask":torch.tensor(self.src_texts["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids": torch.tensor(self.tgt_texts["input_ids"][idx],dtype=torch.long)}
-
-
-    def load_validation_data(self):
-        data = []
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/dev_complete.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        for i in range(len(dataset)):
-            data_i = {}
-            answer_choices = "Answer Choices:\n"
-            for j in range(len(dataset[i]['question']['choices'])):
-                answer_choices += "("+dataset[i]['question']['choices'][j]["label"].lower()+") "+dataset[i]['question']['choices'][j]["text"]+"\n"
-            question = "Q: "+dataset[i]['question']["stem"] +"\n" + answer_choices+"A:"
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-
-            data_i["src_text"] = src_text
-            data_i["tgt_text"] = "("+dataset[i]['answerKey'].lower()+")"
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_test_data(self):
-        data = []
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/test_complete.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        for i in range(len(dataset)):
-            data_i = {}
-            answer_choices = "Answer Choices:\n"
-            for j in range(len(dataset[i]['question']['choices'])):
-                answer_choices += "("+dataset[i]['question']['choices'][j]["label"].lower()+") "+dataset[i]['question']['choices'][j]["text"]+"\n"
-            question = "Q: "+dataset[i]['question']["stem"] +"\n" + answer_choices+"A:"
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-
-            data_i["src_text"] = src_text
-            data_i["tgt_text"] = "("+dataset[i]['answerKey'].lower()+")"
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_training_data(self):
-
-        data = []
-        indices = []
-        with open("./data/GPT3/obqa/cot-train-0-4957-0.0.json") as f:
-            cot_dataset = json.load(f)
-        with open("./data/GPT3/obqa/explain-train-0-4957-0.0.json") as f:
-            explain_dataset = json.load(f)
-        with open("./data/GPT3/obqa/cotexplain-train-0-4957-0.0.json") as f:
-            cotexplain_dataset = json.load(f)
-
-        for idx in range(len(cot_dataset)):
-            if("correct" in self.split):
-                if(cot_dataset[idx]["correct"]):
-                    indices.append(idx)
-            elif("all" in self.split):
-                indices.append(idx)
-
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/train_complete.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        for i in indices:
-            data_i = {}
-            answer_choices = "Answer Choices:\n"
-            for j in range(len(dataset[i]['question']['choices'])):
-                answer_choices += "("+dataset[i]['question']['choices'][j]["label"].lower()+") "+dataset[i]['question']['choices'][j]["text"]+"\n"
-            question = "Q: "+dataset[i]['question']["stem"] +"\n" + answer_choices+"A:"
-            answer = "("+dataset[i]['answerKey'].lower()+")"
-            if("multitask" in self.split):
-                src_text1 = "qta " + question
-                src_text2 = "qtr " + question
-                tgt_text1 = answer
-                # import pdb; pdb.set_trace()
-                if("EXPLANATION" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["explanation"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                elif("COT" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["cot"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                elif("PE" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["pe"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["pe"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["pe"]
-                        data_i["correct"] = True
-
-                data_i["src_text1"] = src_text1
-                data_i["src_text2"] = src_text2
-                data_i["tgt_text1"] = tgt_text1
-                data_i["tgt_text2"] = tgt_text2
-                data.append(data_i)
-            else:
-                src_text = "qta " + question
-                tgt_text = answer
-                data_i["src_text"] = src_text
-                data_i["tgt_text"] = tgt_text
-                data.append(data_i)
-
-        if("multitask" in self.split):
-            src_text1s = [example["src_text1"] for example in data]
-            src_text2s = [example["src_text2"] for example in data]
-            tgt_text1s = [example["tgt_text1"] for example in data]
-            tgt_text2s = [example["tgt_text2"] for example in data]
-            self.src_text1s = self.tokenizer(src_text1s, max_length=self.max_src_len)
-            self.src_text2s = self.tokenizer(src_text2s, max_length=self.max_src_len)
-            self.tgt_text1s = self.tokenizer(tgt_text1s, max_length=self.max_tgt_len)
-            self.tgt_text2s = self.tokenizer(tgt_text2s, max_length=self.max_tgt_len)
-        else:
-            src_texts = [example["src_text"] for example in data]
-            tgt_texts = [example["tgt_text"] for example in data]
-            self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-            self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-class Com2SenseQAForT5(DatasetForT5):
-
-    def __init__(self, max_src_len , max_tgt_len , task_name, tokenizer, split, shot, mask_incorrect_reasoning_path):
-        super().__init__(max_src_len , max_tgt_len , task_name, tokenizer, split)
-        self.shot = shot
-        self.mask_incorrect_reasoning_path = mask_incorrect_reasoning_path
-        if("train" in self.split):
-            self.data = self.load_training_data()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-
-    def __getitem__(self, idx):
-
-        if("multitask" in self.split):
-
-            if(self.mask_incorrect_reasoning_path):
-                tgt_ids2 = torch.tensor(self.tgt_text2s["input_ids"][idx],dtype=torch.long)*int(self.data[idx]["correct"])
-            else:
-                tgt_ids2 = torch.tensor(targets2["input_ids"][idx],dtype=torch.long)
-            return {"src_ids1": torch.tensor(self.src_text1s["input_ids"][idx],dtype=torch.long),
-                    "src_ids2": torch.tensor(self.src_text2s["input_ids"][idx],dtype=torch.long),
-                    "src_mask1":torch.tensor(self.src_text1s["attention_mask"][idx],dtype=torch.long),
-                    "src_mask2":torch.tensor(self.src_text2s["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids1": torch.tensor(self.tgt_text1s["input_ids"][idx],dtype=torch.long),
-                    "tgt_ids2": tgt_ids2}
-        else:
-            return {"src_ids": torch.tensor(self.src_texts["input_ids"][idx],dtype=torch.long),
-                    "src_mask":torch.tensor(self.src_texts["attention_mask"][idx],dtype=torch.long),
-                    "tgt_ids": torch.tensor(self.tgt_texts["input_ids"][idx],dtype=torch.long)}
-
-    def load_data(self,split):
-        dataset = []
-        with open("./data/com2sense/"+split+".json") as f:
-            data = json.load(f)
-        with open("./data/com2sense/pair_id_"+split+".json") as f:
-            pair_id = json.load(f)
-        id2data = {}
-        for i in range(len(data)):
-            id2data[data[i]["id"]] = data[i]
-        key_set = set()
-        for key, value in id2data.items():
-            if(key in key_set):
-                continue
-            pair_key = pair_id[key]
-            key_set.add(key)
-            key_set.add(pair_key)
-            dataset.append([value, id2data[pair_key]])
-            dataset.append([id2data[pair_key], value])
-        return dataset
-
-    def load_validation_data(self):
-        data = []
-        dataset = self.load_data("dev")
-        for i in range(len(dataset)):
-            data_i = {}
-            question = "Q: Which of the following sentence is logically correct?\nAnswer Choices:\n(a) " + dataset[i][0]["sent"] +"\n(b) "+ dataset[i][1]["sent"] +"\nA:"
-            if(dataset[i][0]["label"].lower()=="true"):
-                answer = "(a)"
-            elif(dataset[i][1]["label"].lower()=="true"):
-                answer = "(b)"
-            else:
-                import pdb; pdb.set_trace()
-
-            if("qtr" in self.split):
-                src_text = "qtr " + question
-            elif("qta" in self.split):
-                src_text = "qta " + question
-            else:
-                import pdb; pdb.set_trace()
-
-            tgt_text = answer
-            data_i["src_text"] = src_text
-            data_i["tgt_text"] = tgt_text
-            data.append(data_i)
-        src_texts = [example["src_text"] for example in data]
-        tgt_texts = [example["tgt_text"] for example in data]
-        self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-        self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
-    def load_training_data(self):
-
-
-        indices = []
-        with open("./data/GPT3/com2sense_pair/pair-cot-train-0-1608-0.0.json") as f:
-            cot_dataset = json.load(f)
-        with open("./data/GPT3/com2sense_pair/pair-cot-train-0-1608-0.0.json") as f:
-            explain_dataset = json.load(f)
-        with open("./data/GPT3/com2sense_pair/pair-cot-train-0-1608-0.0.json") as f:
-            cotexplain_dataset = json.load(f)
-
-        for idx in range(len(cot_dataset)):
-            if("correct" in self.split):
-                if(cot_dataset[idx]["correct"]):
-                    indices.append(idx)
-            elif("all" in self.split):
-                indices.append(idx)
-
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-
-        dataset = self.load_data("train")
-        data = []
-        for i in indices:
-            data_i = {}
-            question = "Q: Which of the following sentence is logically correct?\nAnswer Choices:\n(a) " + dataset[i][0]["sent"] +"\n(b) "+ dataset[i][1]["sent"] +"\nA:"
-            if(dataset[i][0]["label"].lower()=="true"):
-                answer = "(a)"
-            elif(dataset[i][1]["label"].lower()=="true"):
-                answer = "(b)"
-            else:
-                import pdb; pdb.set_trace()
-            if("multitask" in self.split):
-                src_text1 = "qta " + question
-                src_text2 = "qtr " + question
-                tgt_text1 = answer
-                # import pdb; pdb.set_trace()
-                if("EXPLANATION" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["explanation"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["explanation"]
-                        data_i["correct"] = True
-                elif("COT" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["cot"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["cot"]
-                        data_i["correct"] = True
-                elif("PE" in self.split):
-                    if("cotexplain" in self.split):
-                        tgt_text2 = cotexplain_dataset[i]["pe"]
-                        data_i["correct"] = True
-                    elif("cot" in self.split):
-                        tgt_text2 = cot_dataset[i]["pe"]
-                        data_i["correct"] = cot_dataset[i]["correct"]
-                    elif("explain" in self.split):
-                        tgt_text2 = explain_dataset[i]["pe"]
-                        data_i["correct"] = True
-
-                data_i["src_text1"] = src_text1
-                data_i["src_text2"] = src_text2
-                data_i["tgt_text1"] = tgt_text1
-                data_i["tgt_text2"] = tgt_text2
-                data.append(data_i)
-            # elif("pe" in self.split):
-            #     import pdb; pdb.set_trace()
-            # elif("ep" in self.split):
-            #     import pdb; pdb.set_trace()
-            else:
-                src_text = "qta " + question
-                tgt_text = answer
-                data_i["src_text"] = src_text
-                data_i["tgt_text"] = tgt_text
-                data.append(data_i)
-
-        if("multitask" in self.split):
-            src_text1s = [example["src_text1"] for example in data]
-            src_text2s = [example["src_text2"] for example in data]
-            tgt_text1s = [example["tgt_text1"] for example in data]
-            tgt_text2s = [example["tgt_text2"] for example in data]
-            self.src_text1s = self.tokenizer(src_text1s, max_length=self.max_src_len)
-            self.src_text2s = self.tokenizer(src_text2s, max_length=self.max_src_len)
-            self.tgt_text1s = self.tokenizer(tgt_text1s, max_length=self.max_tgt_len)
-            self.tgt_text2s = self.tokenizer(tgt_text2s, max_length=self.max_tgt_len)
-        else:
-            src_texts = [example["src_text"] for example in data]
-            tgt_texts = [example["tgt_text"] for example in data]
-            self.src_texts = self.tokenizer(src_texts, max_length=self.max_src_len)
-            self.tgt_texts = self.tokenizer(tgt_texts, max_length=self.max_tgt_len)
-        return data
-
 
 def Bertcollate_fn(batch):
 
@@ -2258,247 +1183,6 @@ def Bertcollate_fn(batch):
 
 
 
-
-def T5collate_fn(batch):
-
-    if('src_ids' in batch[0]):
-
-        src_ids = [example['src_ids'] for example in batch]
-        src_mask = [example['src_mask'] for example in batch]
-        tgt_ids = [example['tgt_ids'] for example in batch]
-
-        src_ids = rnn_utils.pad_sequence(src_ids, batch_first=True, padding_value=0)
-        src_mask = rnn_utils.pad_sequence(src_mask, batch_first=True, padding_value=0)
-        tgt_ids = rnn_utils.pad_sequence(tgt_ids, batch_first=True,padding_value=0)
-        # tgt_ids = rnn_utils.pad_sequence(tgt_ids, batch_first=True,padding_value=-100)
-        # tgt_ids[tgt_ids[:, :] == 0] = -100
-
-        return {"src_ids": src_ids,
-                "src_mask":src_mask,
-                "tgt_ids":tgt_ids}
-
-    elif('src_ids1' in batch[0]):
-
-        src_ids1 = [example['src_ids1'] for example in batch]
-        src_ids2 = [example['src_ids2'] for example in batch]
-        src_mask1 = [example['src_mask1'] for example in batch]
-        src_mask2 = [example['src_mask2'] for example in batch]
-        tgt_ids1 = [example['tgt_ids1'] for example in batch]
-        tgt_ids2 = [example['tgt_ids2'] for example in batch]
-        src_ids1 = rnn_utils.pad_sequence(src_ids1, batch_first=True, padding_value=0)
-        src_ids2 = rnn_utils.pad_sequence(src_ids2, batch_first=True, padding_value=0)
-        src_mask1 = rnn_utils.pad_sequence(src_mask1, batch_first=True, padding_value=0)
-        src_mask2 = rnn_utils.pad_sequence(src_mask2, batch_first=True, padding_value=0)
-        tgt_ids1 = rnn_utils.pad_sequence(tgt_ids1, batch_first=True,padding_value=-100)
-        tgt_ids2 = rnn_utils.pad_sequence(tgt_ids2, batch_first=True,padding_value=-100)
-        tgt_ids1[tgt_ids1[:, :] == 0] = -100
-        tgt_ids2[tgt_ids2[:, :] == 0] = -100
-
-        return {"src_ids1": src_ids1,
-                "src_ids2":src_ids2,
-                "src_mask1":src_mask1,
-                "src_mask2":src_mask2,
-                "tgt_ids1":tgt_ids1,
-                "tgt_ids2":tgt_ids2
-                }
-
-class MedQAForFiD(Dataset):
-
-    def __init__(self, task_name,split, shot):
-        super().__init__()
-        self.shot = shot
-        self.split=split
-        self.task_name=task_name
-        if("train" in self.split):
-            self.data = self.load_training_data()
-            # import pdb;pdb.set_trace()
-        elif("validation" in self.split):
-            self.data = self.load_validation_data()
-        
-        elif("test" in self.split):
-            self.data = self.load_test_data()
-        
-
-    def __getitem__(self, idx):
-        example = self.data[idx]
-        return {
-            'src_text' : example['src_text'],
-            'contexts' : example['contexts'],
-            'tgt_text' : example['tgt_text']
-        }
-
-    def __len__(self):
-        return len(self.data)
-
-
-    def load_validation_data(self):
-        
-        data = []
-        indices = []
-
-        if "eA" in self.split:
-            with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-validation-0-1272-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-        elif "wA" in self.split:
-            with open("./data/GPT3/medqa/context_v2/contextwA-validation-0-1272-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-        else:
-            with open("./data/GPT3/medqa/context_v1/context-validation-0-1272-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-
-
-        with open("./data/MedQA/questions/US/4_options/phrases_no_exclude_dev.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-
-        indices=list(range(len(keycontext_dataset)))
-
-
-        for i in indices:
-            choices_text=[]
-            contexts=[]
-            data_i = {}
-            answer_choices = "Answer Choices: "
-            for choice,text in dataset[i]['options'].items():
-                answer_choices += "("+choice.lower()+") "+ text +" "
-                choices_text.append(text)
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            src_text = "qta " + question + answer_choices
-
-            choice=dataset[i]['answer_idx']
-            tgt_text = "("+choice.lower()+")"
-            
-
-            if 'qac' in self.split:
-                if 'eA' in self.split:
-                    for j,choice in enumerate(choices_text):
-                        try:
-                            contexts.append(keycontext_dataset[i]['overall']+" "+keycontext_dataset[i][choice]+'\nA:')
-                        except:
-                            contexts.append(keycontext_dataset[i]['overall']+'\nA:')
-
-            data_i['src_text']=src_text
-            data_i["tgt_text"]=tgt_text
-            data_i['contexts']=contexts
-
-            data.append(data_i)
-
-        return data
-
-    def load_test_data(self):
-        data = []
-        
-        if "eA" in self.split:
-            with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-test-0-1273-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-
-
-        with open("./data/MedQA/questions/US/4_options/phrases_no_exclude_test.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-        
-
-        indices=list(range(len(keycontext_dataset)))
-
-        for i in indices:
-            choices_text=[]
-            contexts=[]
-            data_i = {}
-            answer_choices = "Answer Choices: "
-            for choice,text in dataset[i]['options'].items():
-                answer_choices += "("+choice.lower()+") "+ text +" "
-                choices_text.append(text)
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            src_text = "qta " + question + answer_choices
-
-            choice=dataset[i]['answer_idx']
-            tgt_text = "("+choice.lower()+")"
-            
-            if 'qakc' in self.split:
-                src_text+= "\nKeyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-            elif "qkca" in  self.split:
-                src_text+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-            elif "qak" in self.split:
-                src_text+= "\nKeyword: "+ keycontext_dataset[i]['keywords']+"\nA:"  
-            elif 'qac' in self.split:
-                if 'eA' in self.split:
-                    for j,choice in enumerate(choices_text):
-                        try:
-                            contexts.append(keycontext_dataset[i]['overall']+" "+keycontext_dataset[i][choice]+'\nA:')
-                        except:
-                            contexts.append(keycontext_dataset[i]['overall']+'\nA:')
-
-            data_i['src_text']=src_text
-            data_i["tgt_text"]=tgt_text
-            data_i['contexts']=contexts
-
-            data.append(data_i)
-
-        return data
-
-    def load_training_data(self):
-        
-        data = []
-        indices = []
-
-        if 'eA' in self.split :
-            with open("./data/GPT3/medqa/context_v6/contexteA_no_neg-train-0-4000-0.0.json") as f:
-                keycontext_dataset = json.load(f)
-
-
-        with open("./data/MedQA/questions/US/4_options/phrases_no_exclude_train.jsonl") as f:
-            dataset = []
-            for line in f.readlines():
-                dataset.append(json.loads(line))
-
-
-        
-
-        indices=list(range(len(keycontext_dataset)))
-
-
-        
-        if(self.shot != -1):
-            indices = random.sample(indices, self.shot)
-
-
-        for i in indices:
-            choices_text=[]
-            contexts=[]
-            data_i = {}
-            answer_choices = "Answer Choices: "
-            for choice,text in dataset[i]['options'].items():
-                answer_choices += "("+choice.lower()+") "+ text +" "
-                choices_text.append(text)
-            question = "Q: "+dataset[i]['question'] +"\n" 
-            src_text = "qta " + question + answer_choices
-
-            choice=dataset[i]['answer_idx']
-            tgt_text = "("+choice.lower()+")"
-            
-            if 'qakc' in self.split:
-                src_text+= "\nKeyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\nA:"
-            elif "qkca" in  self.split:
-                src_text+= "Keyword: "+ keycontext_dataset[i]['keywords']+"\nContext: "+keycontext_dataset[i]['context']+"\n"+answer_choices+"A:"
-            elif "qak" in self.split:
-                src_text+= "\nKeyword: "+ keycontext_dataset[i]['keywords']+"\nA:" 
-            elif 'qac' in self.split:
-                if 'eA' in self.split:
-                    for j,choice in enumerate(choices_text):
-                        try:
-                            contexts.append(keycontext_dataset[i]['overall']+" "+keycontext_dataset[i][choice]+'\nA:')
-                        except:
-                            contexts.append(keycontext_dataset[i]['overall']+'\nA:')
-
-            data_i['src_text']=src_text
-            data_i["tgt_text"]=tgt_text
-            data_i['contexts']=contexts
-
-            data.append(data_i)
-
-        return data
 
 class DataCollatorForMultipleChoice(object):
     

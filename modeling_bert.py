@@ -35,7 +35,6 @@ class BertForMTL(BertPreTrainedModel):
     def __init__(self, config,args):
         super().__init__(config)
         self.bert = BertModel(config)
-        self.smoothing_ratio=args.smoothing_ratio
         classifier_dropout = (
             config.classifier_dropout if config.classifier_dropout is not None else config.hidden_dropout_prob)
         self.dropout = nn.Dropout(classifier_dropout)
@@ -113,7 +112,7 @@ class BertForMTL(BertPreTrainedModel):
             loss=mt_weight*loss_mc+(1-mt_weight)*masked_lm_loss
         else:
             if mc_label is not None:
-                loss = CrossEntropyLoss(label_smoothing=self.smoothing_ratio)(reshaped_logits, mc_label)
+                loss = CrossEntropyLoss()(reshaped_logits, mc_label)
 
 
         if not return_dict:

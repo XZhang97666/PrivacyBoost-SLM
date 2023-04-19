@@ -30,28 +30,23 @@ async def main():
     if(args.dataset_name=="csqa"):
         if "context" in args.mode:
             intro_prompt="Generate context based on commonsense knowledge by utilizing the provided keywords and answer choices. Identify the specific commonsense relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
-            with open("./data/csqa/"+args.split+"_concepts.json") as f:
+            with open("./data/csqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
         dataset = load_dataset('commonsense_qa',split=args.split)
-        
-        with open("./data/csqa/key2context_prompt.json") as f:
-            init_prompts = json.load(f) 
-            with open("./data/csqa/prompts.json") as f:
-                init_prompt_dict = json.load(f)
-            if 'context' in args.mode:
-                init_prompt=init_prompt_dict['context_v5']
+        with open("./data/csqa/apicall/prompts.json") as f:
+            init_prompt_dict = json.load(f)
+        if 'context' in args.mode:
+            init_prompt=init_prompt_dict['Context']
     elif(args.dataset_name=="obqa"):
         if "context" in args.mode:
             intro_prompt="Generate context based on commonsense knowledge by utilizing the provided keywords and answer choices. Identify the specific commonsense relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
-            with open("./data/obqa/"+args.split+"_concepts.json") as f:
+            with open("./data/obqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
-        with open("./data/obqa/key2context_prompt.json") as f:
-            init_prompts = json.load(f)
-        with open("./data/OpenBookQA-V1-Sep2018/Data/Additional/"+args.split+"_complete.jsonl") as f:
+        with open("./data/obqa/OpenBookQA-V1-Sep2018/Data/Additional/"+args.split+"_complete.jsonl") as f:
             dataset = []
             for line in f.readlines():
                 dataset.append(json.loads(line))
-        with open("./data/obqa/prompts.json") as f:
+        with open("./data/obqa/apicall/prompts.json") as f:
             init_prompt_dict = json.load(f)
         if 'context' in args.mode:
             init_prompt=init_prompt_dict['Context']
@@ -67,60 +62,45 @@ async def main():
                 intro_prompt="Generate a context using medical knowledge by incorporating the given keywords and answer choices. Identify the specific medical relationship between the context and each answer choice. If the relationship is negative, conclude with the phrase 'It is not' as the last sentence.\n\n"
 
             if '25' in args.mode:
-                with open("./data/MedQA/"+args.split+"_concepts25.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_concepts25.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/key2context_prompt25.json") as f:
-                    init_prompts = json.load(f)
             elif '50' in args.mode:
-                with open("./data/MedQA/"+args.split+"_concepts50.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_concepts50.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/key2context_prompt50.json") as f:
-                    init_prompts = json.load(f)
             elif '75' in args.mode:
-                with open("./data/MedQA/"+args.split+"_concepts75.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_concepts75.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/key2context_prompt75.json") as f:
-                    init_prompts = json.load(f)
             elif 'randomspan' in args.mode:
-                with open("./data/MedQA/"+args.split+"_span_random.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_span_random.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/span2context_prompt.json") as f:
-                    init_prompts = json.load(f)
             elif 'random' in args.mode:
-                with open("./data/MedQA/"+args.split+"_concepts_random.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_concepts_random.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/key2context_prompt_random.json") as f:
-                    init_prompts = json.load(f)
             else:
-                with open("./data/MedQA/"+args.split+"_concepts.json") as f:
+                with open("./data/MedQA/apicall/"+args.split+"_concepts.json") as f:
                     concepts = json.load(f)
-                with open("./data/MedQA/key2context_prompt.json") as f:
-                    init_prompts = json.load(f)
 
         if '25' in args.mode:
-            with open("./data/MedQA/prompts25.json") as f:
+            with open("./data/MedQA/apicall/prompts25.json") as f:
                 init_prompt_dict = json.load(f)
         elif '50' in args.mode:
-            with open("./data/MedQA/prompts50.json") as f:
+            with open("./data/MedQA/apicall/prompts50.json") as f:
                 init_prompt_dict = json.load(f)
         elif '75' in args.mode:
-            with open("./data/MedQA/prompts75.json") as f:
+            with open("./data/MedQA/apicall/prompts75.json") as f:
                 init_prompt_dict = json.load(f)
         elif 'randomspan' in args.mode:
-            with open("./data/MedQA/prompts_randomspan.json") as f:                                                                                                                                         
+            with open("./data/MedQA/apicall/prompts_randomspan.json") as f:                                                                                                                                         
                 init_prompt_dict = json.load(f)
         elif 'random' in args.mode:
-            with open("./data/MedQA/prompts_random.json") as f:                                                                                                                                         
+            with open("./data/MedQA/apicall/prompts_random.json") as f:                                                                                                                                         
                 init_prompt_dict = json.load(f)
         else:
-            with open("./data/MedQA/prompts.json") as f:
+            with open("./data/MedQA/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
             
-           
-        if ('25' in args.mode) or  ('50' in args.mode) or  ('75' in args.mode) or ('random' in args.mode):
-            init_prompt = init_prompt_dict['Context']
-        else:
-            init_prompt = init_prompt_dict['context_v6']
+        init_prompt = init_prompt_dict['Context']
+
 
 
     elif(args.dataset_name=="mmlu"):
@@ -129,15 +109,15 @@ async def main():
 
         if "context" in args.mode:
             intro_prompt=intro_prompt="Generate context with medical knowledge by utilizing the provided keywords and answer choices. Identify the specific medical relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
-            with open("./data/mmlu/"+args.split+"_concepts.json") as f:
+            with open("./data/mmlu/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
             # with each answer
-            with open("./data/MedQA/key2context_prompt.json") as f:
+            with open("./data/MedQA/apicall/key2context_prompt.json") as f:
                 init_prompts = json.load(f)
           
-            with open("./data/MedQA/prompts.json") as f:
+            with open("./data/MedQA/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
-            init_prompt = init_prompt_dict['context_v6']
+            init_prompt = init_prompt_dict['Context']
 
     elif(args.dataset_name=="medmcqa"):
 
@@ -149,13 +129,10 @@ async def main():
 
         if "context" in args.mode:
             intro_prompt="Generate a context using medical knowledge by incorporating the given keywords and answer choices. Identify the specific medical relationship between the context and each answer choice. If the relationship is negative, conclude with the phrase 'It is not' as the last sentence.\n\n"
-            with open("./data/medmc/"+args.split+"_concepts.json") as f:
+            with open("./data/medmc/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
-            # with each answer
-            with open("./data/medmc/key2context_prompt.json") as f:
-                init_prompts = json.load(f)
 
-            with open("./data/medmc/prompts.json") as f:
+            with open("./data/medmc/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
             init_prompt = init_prompt_dict['Context']
     

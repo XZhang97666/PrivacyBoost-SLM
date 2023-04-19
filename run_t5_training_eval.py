@@ -51,9 +51,9 @@ from transformers import (
 )
 from modeling_t5 import FiDT5
 from tensorboardX import SummaryWriter
-from SLMReason.data import CSQAForT5, MedQAForFiD , MedQAForT5, OBQAForFiD, T5collate_fn,FiDCollator,MMLUForFiD,CSQAForFiD
+from data import  OBQAForFiD,FiDCollator,CSQAForFiD
 from transformers.utils.versions import require_version
-from run_eval_mem import eval_checkpoint, eval_hoc_checkpoint
+from run_eval_mem import eval_checkpoint
 import time
 from modeling_t5 import FiDT5
 logger = logging.getLogger(__name__)
@@ -310,33 +310,23 @@ def main():
     
 
     if args.model_name_or_path:
-        if("fid" in args.train_split):
-            t5 = T5ForConditionalGeneration.from_pretrained(args.model_name_or_path)
-            model = FiDT5(t5.config)
-            model.load_t5(t5.state_dict())
-        else:
-            model = AutoModelForSeq2SeqLM.from_pretrained(
-                args.model_name_or_path,
-                from_tf=bool(".ckpt" in args.model_name_or_path),
-                config=config,
-            )
+        t5 = T5ForConditionalGeneration.from_pretrained(args.model_name_or_path)
+        model = FiDT5(t5.config)
+        model.load_t5(t5.state_dict())
+
     else:
         logger.info("Training new model from scratch")
         model = AutoModelForSeq2SeqLM.from_config(config)
-
-    if(args.dataset_name=="gsm8k"):
-        num_added_toks = tokenizer.add_tokens(["<<"])
-        print("We have added", num_added_toks, "tokens")
 
     # model.resize_token_embeddings(len(tokenizer))
 
     if model.config.decoder_start_token_id is None:
         raise ValueError("Make sure that `config.decoder_start_token_id` is correctly defined")
-    if(args.dataset_name=="csqa"and 'fid' in args.train_split):
+    if(args.dataset_name=="csqa"):
         train_dataset = CSQAForFiD(args.dataset_name, args.train_split, args.shot)
         eval_dataset  = CSQAForFiD (args.dataset_name,args.eval_split, shot=-1) # elif(args.dataset_name=="strategyqa"):
  
-    elif (args.dataset_name=="obqa"and 'fid' in args.train_split):
+    elif (args.dataset_name=="obqa"):
         if args.train:
             train_dataset = OBQAForFiD(args.dataset_name, args.train_split, args.shot)
             eval_dataset  = OBQAForFiD (args.dataset_name,args.eval_split, shot=-1)
@@ -435,11 +425,8 @@ def main():
                 if(args.debug):
                     import pdb; pdb.set_trace()
 
-                if 'fid' in args.train_split:
-                    loss=model(input_ids=batch["src_ids"], attention_mask=batch["src_mask"], labels = batch["tgt_ids"])[0]
-                else:
-                    outputs = model(input_ids=batch["src_ids"], attention_mask=batch["src_mask"], labels = batch["tgt_ids"])
-                    loss = outputs.loss
+                loss=model(input_ids=batch["src_ids"], attention_mask=batch["src_mask"], labels = batch["tgt_ids"])[0]
+              
                 # import pdb; pdb.set_trace()
                 loss = loss / args.gradient_accumulation_steps
                 logging_loss += loss.item()

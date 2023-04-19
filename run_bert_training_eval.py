@@ -28,7 +28,6 @@ import random
 import shutil
 import sys
 from fnmatch import fnmatch
-import datasets
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
@@ -36,9 +35,8 @@ import evaluate
 from tqdm.auto import tqdm
 from copy import deepcopy
 import transformers
-from accelerate import Accelerator,DeepSpeedPlugin
-from accelerate.utils import set_seed, DummyScheduler,DummyOptim
-from accelerate.state import AcceleratorState
+from accelerate import Accelerator
+from accelerate.utils import set_seed
 from filelock import FileLock
 from transformers import (
     CONFIG_MAPPING,
@@ -51,12 +49,10 @@ from transformers import (
     get_scheduler,
 )
 from tensorboardX import SummaryWriter
-from data import MedQAForBert, DataCollatorForMultipleChoice, MMLUForBert, MedMACQAForBert,HeadQAForBert
+from data import MedQAForBert,MMLUForBert, MedMACQAForBert, HeadQAForBert, DataCollatorForMultipleChoice
 from transformers.utils.versions import require_version
 import time
-
-
-from modeling_gpt import GPT2ForMultipleChoice
+from modeling_bert import BertForMTL
 logger = logging.getLogger(__name__)
 require_version("datasets>=1.8.0", "To fix: pip install -r examples/pytorch/summarization/requirements.txt")
 
@@ -182,12 +178,6 @@ def parse_args():
     )
     
     parser.add_argument(
-        "--mask_incorrect_reasoning_path",
-        action="store_true",
-        help="If passed, will mask incorrect reasoning path",
-    )
-
-    parser.add_argument(
         "--shot", type=int, default=-1, help="Use all training data by default"
     )
 
@@ -267,8 +257,6 @@ def main():
     if accelerator.is_main_process:
         tb_writer = SummaryWriter(args.output_dir)
 
-    if args.test:
-        args.model_name_or_path=args.output_dir+"/best_model/"
 
     if args.config_name:
         config = AutoConfig.from_pretrained(args.config_name)
@@ -289,47 +277,38 @@ def main():
         )
 
     if args.model_name_or_path:
-        model = GPT2ForMultipleChoice.from_pretrained(args.model_name_or_path,
+        model = BertForMTL.from_pretrained(args.model_name_or_path,
                 from_tf=bool(".ckpt" in args.model_name_or_path),
-                config=config)
-                
+                config=config,args=args)
                 
     else:
         logger.info("Training new model from scratch")
         model = AutoModelForMultipleChoice.from_config(config)
-                
-
-
-    if tokenizer.pad_token_id is None:
-        print('Adding [PAD] token to tokenizer and model word embeddings.')
-        num_added_tokens = tokenizer.add_special_tokens({'pad_token': '[PAD]', 'cls_token': '[CLS]', 'sep_token': '[SEP]'})
-        embedding_layer = model.resize_token_embeddings(len(tokenizer))
-        config.pad_token_id = tokenizer.pad_token_id
-
     if(args.dataset_name=="medqa"):
-        if args.train:
-            train_dataset = MedQAForBert( args.dataset_name,args.train_split, args.shot)
-            eval_dataset  = MedQAForBert(args.dataset_name, args.eval_split, shot=-1)
+        train_dataset = MedQAForBert( args.dataset_name,args.train_split, args.shot)
+        eval_dataset  = MedQAForBert(args.dataset_name, args.eval_split, shot=-1)
         if args.test:
             test_split= args.eval_split.replace("validation","test")
             test_dataset  = MedQAForBert(args.dataset_name, test_split, shot=-1)
     elif (args.dataset_name=='mmlu'):
-        test_dataset  = MMLUForBert(args.dataset_name, test_split, shot=-1)
+        if args.test:
+            test_split= args.eval_split.replace("validation","test")
+            test_dataset  = MMLUForBert(args.dataset_name, test_split, shot=-1)
 
     elif (args.dataset_name=='medmcqa'):
         if args.train:
             train_dataset = MedMACQAForBert( args.dataset_name,args.train_split, args.shot)
             eval_dataset  = MedMACQAForBert(args.dataset_name, args.eval_split, shot=args.eval_shot)
-        if args.test:
-            test_dataset  = MedMACQAForBert(args.dataset_name, args.eval_split, shot=args.eval_shot)
 
     elif (args.dataset_name=='headqa'):
         if args.train:
             train_dataset = HeadQAForBert( args.dataset_name,args.train_split, args.shot)
-            eval_dataset  = HeadQAForBert(args.dataset_name, args.eval_split, shot=-1)
+            eval_dataset  = HeadQAForBert(args.dataset_name, args.eval_split, shot=args.eval_shot)
+        
         if args.test:
             test_split= args.eval_split.replace("validation","test")
             test_dataset  = HeadQAForBert(args.dataset_name, test_split, shot=-1)
+
     if args.train:
         for index in random.sample(range(len(train_dataset)), 1):
             logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
@@ -338,8 +317,8 @@ def main():
             logger.info(f"Sample {index} of the test set: {test_dataset[index]}.")
 
     
-    train_data_collator = DataCollatorForMultipleChoice(config,tokenizer,args.max_seq_length,args.masked_token_prob,args.train_split)
-    eval_data_collator = DataCollatorForMultipleChoice(config,tokenizer,args.max_seq_length,args.masked_token_prob,args.eval_split)
+    train_data_collator = DataCollatorForMultipleChoice(config, tokenizer,args.max_seq_length,args.masked_token_prob,args.train_split)
+    eval_data_collator = DataCollatorForMultipleChoice(config, tokenizer,args.max_seq_length,args.masked_token_prob,args.eval_split)
 
     if args.train:
         train_dataloader = DataLoader(train_dataset,collate_fn=train_data_collator, batch_size=args.per_device_train_batch_size,shuffle=True)
@@ -349,54 +328,36 @@ def main():
 
 # Optimizer
 # Split weights in two groups, one with weight decay and the other not.
+    no_decay = ["bias", "LayerNorm.weight"]
+    optimizer_grouped_parameters = [
+        {
+            "params": [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)],
+            "weight_decay": args.weight_decay,
+        },
+        {
+            "params": [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
+            "weight_decay": 0.0,
+        },
+    ]
+
+    
 
     # Scheduler and math around the number of training steps.
     if args.train :
-        no_decay = ["bias", "LayerNorm.weight"]
-        optimizer_grouped_parameters = [
-            {
-                "params": [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)],
-                "weight_decay": args.weight_decay,
-            },
-            {
-                "params": [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
-                "weight_decay": 0.0,
-            },
-        ]
-
-        print(accelerator.state.deepspeed_plugin)
-
-        optimizer_cls = (
-        torch.optim.AdamW
-        if accelerator.state.deepspeed_plugin is None
-        or "optimizer" not in accelerator.state.deepspeed_plugin.deepspeed_config
-        else DummyOptim)
-        optimizer = optimizer_cls(optimizer_grouped_parameters, lr=args.learning_rate)
-
-
+        optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate)
         num_update_steps_per_epoch = math.ceil(len(train_dataloader) / args.gradient_accumulation_steps)
         if args.max_train_steps is None:
             args.max_train_steps = args.num_train_epochs * num_update_steps_per_epoch
         else:
             args.num_train_epochs = math.ceil(args.max_train_steps / num_update_steps_per_epoch)
 
-        # Creates Dummy Scheduler if `scheduler` was spcified in the config file else creates `args.lr_scheduler_type` Scheduler
-        if (
-            accelerator.state.deepspeed_plugin is None
-            or "scheduler" not in accelerator.state.deepspeed_plugin.deepspeed_config
-        ):
-            lr_scheduler = get_scheduler(
-                name=args.lr_scheduler_type,
-                optimizer=optimizer,
-                num_warmup_steps=args.num_warmup_steps,
-                num_training_steps=args.max_train_steps,
-            )
-        else:
-            lr_scheduler = DummyScheduler(
-                optimizer, total_num_steps=args.max_train_steps, warmup_num_steps=args.num_warmup_steps
-            )
-            
-
+        lr_scheduler = get_scheduler(
+            name=args.lr_scheduler_type,
+            optimizer=optimizer,
+            num_warmup_steps=args.num_warmup_steps,
+            num_training_steps=args.max_train_steps,
+        )
+    
         args.device=model.device
         total_batch_size = args.per_device_train_batch_size * accelerator.num_processes * args.gradient_accumulation_steps
 
@@ -409,6 +370,7 @@ def main():
         logger.info(f"  Total optimization steps = {args.max_train_steps}")
         # Only show the progress bar once on each machine.
         progress_bar = tqdm(range(args.max_train_steps), disable=not accelerator.is_local_main_process)
+    
     model, optimizer, train_dataloader, eval_dataloader, test_dataloader,lr_scheduler = accelerator.prepare(
         model, optimizer, train_dataloader,  eval_dataloader, test_dataloader,lr_scheduler
     )
@@ -423,14 +385,13 @@ def main():
     best_results={}
 
     if args.train:
-        
         for epoch in range(args.num_train_epochs):
             eval_predicted_result=[]
             results={}
             model.train()
             
             for step, batch in enumerate(train_dataloader):
-                outputs = model(**batch)
+                outputs = model(**batch,mt_weight=args.mt_weight)
                 loss = outputs.loss
 
                 loss = loss / args.gradient_accumulation_steps
@@ -460,7 +421,7 @@ def main():
             for step, batch in enumerate(eval_dataloader):
                 with torch.no_grad():
                     outputs = model(**batch)
-                predictions = outputs.logits.argmax(dim=-1)
+                predictions = outputs.mc_logits.argmax(dim=-1)
                 predictions, references = accelerator.gather_for_metrics((predictions, batch["mc_label"]))
                 eval_predicted_result.extend(predictions.tolist())
                 metric.add_batch(
@@ -468,7 +429,6 @@ def main():
                     references=references,
                 )
                 progress_bar_eval.update(1)
-            # import pdb;pdb.set_trace()
             eval_metric = metric.compute()
             accelerator.print(f"epoch {epoch}: {eval_metric}")
             results["epoch"] = epoch
@@ -484,11 +444,10 @@ def main():
                     if accelerator.is_main_process:
                         os.makedirs(args.output_dir+"/best_model", exist_ok=True)
                     unwrapped_model = accelerator.unwrap_model(model)
-                    unwrapped_model.save_pretrained(args.output_dir+"/best_model", is_main_process=accelerator.is_main_process,save_function=accelerator.save,state_dict=accelerator.get_state_dict(model))
+                    unwrapped_model.save_pretrained(args.output_dir+"/best_model", save_function=accelerator.save)
                     if accelerator.is_main_process:
                         tokenizer.save_pretrained(args.output_dir+"/best_model")
                         config.save_pretrained(args.output_dir+"/best_model")
-
             print(best_metric)
             if epoch-best_dev_epoch>5:
                 print('early_stop')
@@ -513,13 +472,15 @@ def main():
                     break
         if output_file_path=='':
             output_file_path=args.output_dir
-      
+        state_dict = torch.load(output_file_path+"/best_model/pytorch_model.bin", map_location=torch.device(args.device))
+        
+        model.load_state_dict(state_dict)
         model.eval()
         progress_bar_test = tqdm(range(len(test_dataloader)), disable=False)
         for step, batch in enumerate(test_dataloader):
             with torch.no_grad():
                 outputs = model(**batch)
-            predictions = outputs.logits.argmax(dim=-1)
+            predictions = outputs.mc_logits.argmax(dim=-1)
             test_predicted_result.extend(predictions.tolist())
             predictions, references = accelerator.gather_for_metrics((predictions, batch["mc_label"]))
             metric.add_batch(

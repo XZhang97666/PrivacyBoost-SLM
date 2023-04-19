@@ -47,11 +47,7 @@ from transformers import (
     SchedulerType,
     get_scheduler,
 )
-from tensorboardX import SummaryWriter
-from data import CSQAForT5, StrategyQAForT5, Com2SenseQAForT5, CreakQAForT5, OpenbookQAForT5, MedQAForT5,BioForT5,HocForT5, T5collate_fn
 from transformers.utils.versions import require_version
-from sklearn.metrics import f1_score
-from sklearn.metrics import precision_recall_fscore_support
 
 
 
