@@ -17,6 +17,26 @@ This includes:
 #### Biomedical domain: [MedQA-USMLE](https://github.com/jind11/MedQA), [HEADQA](https://github.com/aghie/head-qa), [MedMCQA](https://medmcqa.github.io/), and [MMLU-professional medicine](https://github.com/hendrycks/test).
 #### General domain: [CommonSenseQA](https://www.tau-nlp.sites.tau.ac.il/commonsenseqa) and [OpenbookQA](https://allenai.org/data/open-book-qa).
 
+
+### Resulting file structure
+
+The resulting file structure should look like this:
+
+```plain
+.
+├── README.md
+├── data/
+    ├── MedQA/  
+        ├── apicall/             (prompts,keywords for GPT 3.5 API context generation)
+        ├── context/             (genearted context for SLM training)
+        ├── ...
+    ├── headqa/
+    ├── medmc/
+    ├── csqa/
+    └── obqa/
+```
+
+
 To generate context on your own, you can use the `api_call.sh`. To do this, follow the steps below:
 - Set `dataset_name` to the desired dataset, for example: `{medqa headqa medmcqa}`.
 - Set `split` to the desired dataset split, `{train validation|dev test}`.
