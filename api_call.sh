@@ -1,8 +1,8 @@
 start_idx=0
 end_idx=1
-mode="context_chatgpt"
+mode="context_chatgpt_75"
 stop_token="/n/n"
-dataset_name=obqa
+dataset_name=medqa
 split=train
 batch_prompt_size=1
 echo 'dataset_name: '${dataset_name}

@@ -29,7 +29,7 @@ async def main():
     intro_prompt=""
     if(args.dataset_name=="csqa"):
         if "context" in args.mode:
-            intro_prompt="Generate context based on commonsense knowledge by utilizing the provided keywords and answer choices. Identify the specific commonsense relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
+            intro_prompt="Generate a overall context based on commonsense knowledge by utilizing the provided keywords and answer choices. Then, generate the specific commonsense knowledge context for each candidate answers and identify the relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
             with open("./data/csqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
         dataset = load_dataset('commonsense_qa',split=args.split)
@@ -39,7 +39,7 @@ async def main():
             init_prompt=init_prompt_dict['Context']
     elif(args.dataset_name=="obqa"):
         if "context" in args.mode:
-            intro_prompt="Generate context based on commonsense knowledge by utilizing the provided keywords and answer choices. Identify the specific commonsense relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
+            intro_prompt="Generate a overall context based on commonsense knowledge by utilizing the provided keywords and answer choices. Then, generate the specific commonsense knowledge context for each candidate answers and identify the relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
             with open("./data/obqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
         with open("./data/obqa/OpenBookQA-V1-Sep2018/Data/Additional/"+args.split+"_complete.jsonl") as f:
@@ -57,9 +57,9 @@ async def main():
                 dataset.append(json.loads(line))
         if "context" in args.mode:
             if 'span' in args.mode:
-                intro_prompt="Generate a context using medical knowledge by incorporating the given random span extracted from the question and answer choices. Identify the specific medical relationship between the context and each answer choice. If the relationship is negative, conclude with the phrase 'It is not' as the last sentence.\n\n"
+                intro_prompt="Generate a overall context using medical knowledge by incorporating the given random span extracted from the question and candidate answers. Then, generate the specific medical knowledge-intensive context of each candidate answers and identify relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
             else:
-                intro_prompt="Generate a context using medical knowledge by incorporating the given keywords and answer choices. Identify the specific medical relationship between the context and each answer choice. If the relationship is negative, conclude with the phrase 'It is not' as the last sentence.\n\n"
+                intro_prompt="Generate a overall context using medical knowledge by incorporating the given keywords extracted from the question and candidate answers. Then, generate the specific medical knowledge-intensive context of each candidate answers and identify relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
 
             if '25' in args.mode:
                 with open("./data/MedQA/apicall/"+args.split+"_concepts25.json") as f:
@@ -100,6 +100,7 @@ async def main():
                 init_prompt_dict = json.load(f)
             
         init_prompt = init_prompt_dict['Context']
+        
 
 
 
@@ -108,12 +109,10 @@ async def main():
         dataset = load_dataset('./data/mmlu/professional_medicine/',split=args.split)
 
         if "context" in args.mode:
-            intro_prompt=intro_prompt="Generate context with medical knowledge by utilizing the provided keywords and answer choices. Identify the specific medical relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
+            intro_prompt=intro_prompt="Generate a overall context using medical knowledge by incorporating the given keywords extracted from the question and candidate answers. Then, generate the specific medical knowledge-intensive context of each candidate answers and identify relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
+
             with open("./data/mmlu/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
-            # with each answer
-            with open("./data/MedQA/apicall/key2context_prompt.json") as f:
-                init_prompts = json.load(f)
           
             with open("./data/MedQA/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
@@ -128,7 +127,8 @@ async def main():
                 idx_list=json.load(f)
 
         if "context" in args.mode:
-            intro_prompt="Generate a context using medical knowledge by incorporating the given keywords and answer choices. Identify the specific medical relationship between the context and each answer choice. If the relationship is negative, conclude with the phrase 'It is not' as the last sentence.\n\n"
+            intro_prompt="Generate a overall context using medical knowledge by incorporating the given keywords extracted from the question and candidate answers. Then, generate the specific medical knowledge-intensive context of each candidate answers and identify relationship between it and the overall context. If the relationship is not exist, generate ' No relationship can be found.' as the last sentence.\n\n"
+
             with open("./data/medmc/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
 
@@ -141,12 +141,11 @@ async def main():
         dataset = load_dataset("head_qa","en",split=args.split)
 
         if "context" in args.mode:
-            intro_prompt="Generate context with medical knowledge based on the subject by utilizing the provided keywords and answer choices. Identify the specific medical relationship between the knowledge and each answer choice. If the relationship is negative, use the pattern 'It is not' as the last sentence. \n\n"
+            intro_prompt="Generate a overall context using medical knowledge by incorporating the given keywords extracted from the question and candidate answers. Then, generate the specific medical knowledge-intensive context of each candidate answers and identify relationship between it and the overall context. If the relationship is not exist, generate 'No relationship can be found.' as the last sentence.\n\n"
+
             with open("./data/headqa/apicall/"+args.split+"_concepts.json") as f:
                 concepts = json.load(f)
             # with each answer
-            with open("./data/headqa/apicall/key2context_prompt.json") as f:
-                init_prompts = json.load(f)
            
             with open("./data/headqa/apicall/prompts.json") as f:
                 init_prompt_dict = json.load(f)
@@ -154,8 +153,6 @@ async def main():
         elif 'cot' in args.mode:
             intro_prompt="'The following are multiple choice questions (with answers) about medical knowledge.\n\n"
             # with each answer
-            with open("./data/headqa/apicall/cot_prompt.json") as f:
-                init_prompts = json.load(f)
             with open("./data/headqa/apicall/cots.json") as f:
                 init_prompt_dict = json.load(f)
             init_prompt = init_prompt_dict['Explanation']
@@ -173,7 +170,7 @@ async def main():
         if(args.dataset_name=="csqa"):
 
             keywords="Question Keywords: "
-            answer_choices = "Answer Choices: "
+            answer_choices = "Candidate Answers: "
             keywords+=", ".join(concepts[i]['Question Keywords'])
             for j in range(len(dataset[i]['choices']["label"])):
                 answer_choices += "("+dataset[i]['choices']["label"][j].lower()+") "+dataset[i]['choices']["text"][j]+" "
@@ -212,7 +209,7 @@ async def main():
 
         elif(args.dataset_name=="obqa"):
             keywords="Question Keywords: "
-            answer_choices = "Answer Choices: "
+            answer_choices = "Candidate Answers: "
             keywords+=", ".join(concepts[i])
             for j in range(len(dataset[i]['question']['choices'])):
                 answer_choices += "("+dataset[i]['question']['choices'][j]["label"].lower()+") "+dataset[i]['question']['choices'][j]["text"]+" "
@@ -247,7 +244,7 @@ async def main():
             gname="Context"
             if 'span' in args.mode:
                 span="Question Random Span: "
-                answer_choices = "Answer Choices: "
+                answer_choices = "Candidate Answers: "
                 span+=concepts[i]['span']
                 for choice,text in dataset[i]['options'].items():
                     answer_choices += "("+choice.lower()+") "+ text +" "
@@ -255,7 +252,7 @@ async def main():
             
             else:
                 keywords="Question Keywords: "
-                answer_choices = "Answer Choices: "
+                answer_choices = "Candidate Answers: "
                 keywords+=", ".join(concepts[i]['keywords'])
                 for choice,text in dataset[i]['options'].items():
                     answer_choices += "("+choice.lower()+") "+ text +" "
@@ -306,7 +303,7 @@ async def main():
 
             gname="Context"
             keywords="Question Keywords: "
-            answer_choices = "Answer Choices: "
+            answer_choices = "Candidate Answers: "
             keywords+=", ".join(concepts[j]['keywords'])
             for ending in ending_names:
                 answer_choices += "("+endings_dict[ending]+") "+dataset[j][ending] +" "
@@ -356,7 +353,7 @@ async def main():
             gname="Context"
            
             keywords="Question Keywords: "
-            answer_choices = "Answer Choices: "
+            answer_choices = "Candidate Answers: "
             keywords+=", ".join(concepts[i]['keywords'])
             for ending in ending_names:
                 answer_choices += "("+endings_dict[ending]+") "+ dataset[i][ending] +" "
@@ -402,7 +399,7 @@ async def main():
                 gname="Context"
 
                 keywords="Question Keywords: "
-                answer_choices = "Answer Choices: "
+                answer_choices = "Candidate Answers: "
                 keywords+=", ".join(concepts[i]['keywords'])
                 for ans in answers:
                     j=ans['aid']
@@ -415,7 +412,7 @@ async def main():
 
                 question="Question: "
                 question+=dataset[i]['qtext']
-                answer_choices = "Answer Choices: "
+                answer_choices = "Candidate Answers: "
                 for ans in answers:
                     j=ans['aid']
                     text=ans['atext']

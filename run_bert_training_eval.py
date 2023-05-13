@@ -19,14 +19,13 @@ Fine-tuning a 🤗 Transformers model on multiple choice relying on the accelera
 # You can also adapt this script on your own multiple choice task. Pointers for this are left as comments.
 
 
+import os
 import argparse
 import json
 import logging
 import math
-import os
 import random
 import shutil
-import sys
 from fnmatch import fnmatch
 import numpy as np
 import torch
@@ -52,7 +51,7 @@ from tensorboardX import SummaryWriter
 from data import MedQAForBert,MMLUForBert, MedMACQAForBert, HeadQAForBert, DataCollatorForMultipleChoice
 from transformers.utils.versions import require_version
 import time
-from modeling_bert import BertForMTL
+from modeling.modeling_bert import BertForMTL
 logger = logging.getLogger(__name__)
 require_version("datasets>=1.8.0", "To fix: pip install -r examples/pytorch/summarization/requirements.txt")
 
