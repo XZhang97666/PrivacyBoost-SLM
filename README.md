@@ -90,13 +90,13 @@ run_training_eval_bert_OOD.sh
 If you found this repository useful, please consider cite our paper:
 
 ```bibtex
-@misc{zhang2022improving,
-      title={Improving Medical Predictions by Irregular Multimodal Electronic Health Records Modeling}, 
-      author={Xinlu Zhang and Shiyang Li and Zhiyu Chen and Xifeng Yan and Linda Petzold},
-      year={2022},
-      eprint={2210.12156},
+@misc{zhang2023enhancing,
+      title={Enhancing Small Medical Learners with Privacy-preserving Contextual Prompting}, 
+      author={Xinlu Zhang and Shiyang Li and Xianjun Yang and Chenxin Tian and Yao Qin and Linda Ruth Petzold},
+      year={2023},
+      eprint={2305.12723},
       archivePrefix={arXiv},
-      primaryClass={cs.LG}
+      primaryClass={cs.CL}
 }
 ```
 ## Acknowledgements
