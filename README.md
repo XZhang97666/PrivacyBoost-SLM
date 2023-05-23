@@ -1,6 +1,6 @@
 # PrivacyBoost-SLM
 
-## 1. Set up environment and data
+## Set up environment and data
 
 ### Environment
 Run the following commands to create a conda environment:
@@ -85,7 +85,21 @@ run_training_eval_bert_OOD.sh
 
 
 
+## Citation
 
+If you found this repository useful, please consider cite our paper:
 
+```bibtex
+@misc{zhang2022improving,
+      title={Improving Medical Predictions by Irregular Multimodal Electronic Health Records Modeling}, 
+      author={Xinlu Zhang and Shiyang Li and Zhiyu Chen and Xifeng Yan and Linda Petzold},
+      year={2022},
+      eprint={2210.12156},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
+## Acknowledgements
 
+We would like to express our gratitude to Zhiyu Chen from Meta Reality Labs, Ming Yi, and Hong Wang from the Computer Science Department at UCSB, as well as the anonymous reviewers, for their invaluable feedback. Additionally, we extend our thanks to Rachael A Callcut and Anamaria J Roble for their insightful discussions and guidance on medical prompt designs. Furthermore, we gratefully acknowledge the generous financial support provided by the National Institutes for Health (NIH) grant NIH 7R01HL149670.
 
