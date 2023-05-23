@@ -43,7 +43,7 @@ To generate context on your own, you can use the `api_call.sh`. To do this, foll
 - Specify the `start_idx` and `end_idx` to define the starting and ending index of the dataset you want to iterate through.
 - Call the OpenAI API with the configured settings.
 
-## 2. Experiment results
+## Experiment results
 
 ###  Full-training 
 
